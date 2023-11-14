@@ -1,5 +1,8 @@
 import { Medal } from "lucide-react"
 
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+
 const Homepage = () => {
   return (
     <div className="flex items-center justify-center flex-col">
@@ -14,11 +17,14 @@ const Homepage = () => {
           work forward.
         </div>
       </div>
-      <p className="text-sm md:text-xl text-neutral-400 mt-4 max-w-xs md:max-w-2xl text-center">
+      <p className="text-sm md:text-xl text-neutral-400 mt-4 max-w-xs md:max-w-2xl text-center mb-4">
         Collaborate, manage projects, and reach new productivity peaks. From
         high rises to the home office, the way your team works is unique -
         accomplish it all with Taskify
       </p>
+      <Button>
+        <Link href="/sign-up">Get Taskify for free</Link>
+      </Button>
     </div>
   )
 }
