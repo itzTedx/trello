@@ -1,11 +1,14 @@
-import { Logo } from "@/components/Logo"
-import { Button } from "@/components/ui/button"
-import { OrganizationSwitcher, UserButton } from "@clerk/nextjs"
-import { Plus } from "lucide-react"
+import { Logo } from '@/components/Logo'
+import { Button } from '@/components/ui/button'
+import { OrganizationSwitcher, UserButton } from '@clerk/nextjs'
+import { Plus } from 'lucide-react'
+import { MobileSidebar } from './MobileSidebar'
 
 export const Navbar = () => {
   return (
     <nav className="sticky z-50 px-4 top-0 w-full h-14 border-b shadow-sm bg-white/50 backdrop-blur-md flex items-center">
+      <MobileSidebar />
+
       <div className="flex items-center gap-x-4">
         <div className="hidden md:flex">
           <Logo />
@@ -30,9 +33,9 @@ export const Navbar = () => {
           appearance={{
             elements: {
               rootBox: {
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               },
             },
           }}
