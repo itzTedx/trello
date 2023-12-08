@@ -1,52 +1,72 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { Plus } from 'lucide-react'
-import { useLocalStorage } from 'usehooks-ts'
-import { useOrganization, useOrganizationList } from '@clerk/nextjs'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Button } from '@/components/ui/button'
-import { Accordion } from '@/components/ui/accordion'
-import { NavItem, Organization } from './NavItem'
+import { Accordion } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { useOrganization, useOrganizationList } from "@clerk/nextjs";
+import { Plus } from "lucide-react";
+import Link from "next/link";
+import { useLocalStorage } from "usehooks-ts";
+import { NavItem, Organization } from "./NavItem";
 
 interface SidebarProps {
-  storageKey?: string
+  storageKey?: string;
 }
 
-const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
+export const Sidebar = ({ storageKey = "t-sidebar-state" }: SidebarProps) => {
   const [expanded, setExpanded] = useLocalStorage<Record<string, any>>(
     storageKey,
     {}
-  )
+  );
   const { organization: activeOrganization, isLoaded: isLoadedOrg } =
-    useOrganization()
+    useOrganization();
   const { userMemberships, isLoaded: isLoadedOrgList } = useOrganizationList({
     userMemberships: { infinite: true },
-  })
+  });
 
   const defaultAccordionValue: string[] = Object.keys(expanded).reduce(
     (acc: string[], key: string) => {
       if (expanded[key]) {
-        acc.push(key)
+        acc.push(key);
       }
-      return acc
+      return acc;
     },
     []
-  )
+  );
 
   const onExpand = (id: string) => {
     setExpanded((curr) => ({
       ...curr,
       [id]: !expanded[id],
-    }))
-  }
+    }));
+  };
 
   if (!isLoadedOrg || !isLoadedOrgList || userMemberships.isLoading) {
     return (
       <>
-        <Skeleton className="w-full h-9" />
+        <div className="font-medium text-xs flex items-center mb-1 text-muted-foreground">
+          <span className="pl-4">Workspaces</span>
+          <Button
+            asChild
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="ml-auto"
+          >
+            <Link href="/select-org">
+              <Plus className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+        <div
+          className="space-y-2
+        "
+        >
+          <NavItem.Skeleton />
+          <NavItem.Skeleton />
+          <NavItem.Skeleton />
+        </div>
       </>
-    )
+    );
   }
   return (
     <>
@@ -80,7 +100,5 @@ const Sidebar = ({ storageKey = 't-sidebar-state' }: SidebarProps) => {
         ))}
       </Accordion>
     </>
-  )
-}
-
-export default Sidebar
+  );
+};
